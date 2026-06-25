@@ -47,11 +47,7 @@ public class ChatActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            currentUserId = user.getUid();
-        } else {
-            currentUserId = "Utilisateur_Non_Authentifie";
-        }
+        currentUserId = (user != null) ? user.getUid() : "Utilisateur_Non_Authentifie";
 
         edtMessage = findViewById(R.id.edt_message_text);
         btnSend = findViewById(R.id.btn_send_message);
@@ -61,13 +57,12 @@ public class ChatActivity extends AppCompatActivity {
         adapter = new MessageAdapter();
         listMessages.setAdapter(adapter);
 
-        // Assure-toi que l'URL dans Firebase Console correspond bien à celle configurée dans ton google-services.json
-        dbRef = FirebaseDatabase.getInstance("https://viyu-message-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("TestChat");
+        // Initialisation propre pointant vers ton URL européenne Realtime Database
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://viyu-message-default-rtdb.europe-west1.firebasedatabase.app");
+        dbRef = database.getReference().child("TestChat");
 
         btnSend.setOnClickListener(v -> {
             String text = edtMessage.getText().toString().trim();
-            Log.d("DEBUG_VIYU", "Bouton envoyer cliqué, texte : " + text);
-            
             if (!TextUtils.isEmpty(text)) {
                 String msgId = dbRef.push().getKey();
                 Map<String, Object> msgMap = new HashMap<>();
@@ -79,11 +74,9 @@ public class ChatActivity extends AppCompatActivity {
                     dbRef.child(msgId).setValue(msgMap)
                         .addOnSuccessListener(aVoid -> {
                             edtMessage.setText("");
-                            Toast.makeText(ChatActivity.this, "Message envoyé au cloud", Toast.LENGTH_SHORT).show();
-                            Log.d("DEBUG_VIYU", "Message enregistré avec succès dans Firebase.");
+                            Toast.makeText(ChatActivity.this, "Message envoyé", Toast.LENGTH_SHORT).show();
                         })
                         .addOnFailureListener(e -> {
-                            Log.e("DEBUG_VIYU", "Erreur d'écriture Firebase", e);
                             Toast.makeText(ChatActivity.this, "Erreur : " + e.getMessage(), Toast.LENGTH_LONG).show();
                         });
                 }
@@ -92,26 +85,34 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        // Écouteur en temps réel corrigé qui force le rafraîchissement UI
         dbRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Log.d("DEBUG_VIYU", "Événement temps réel - Nœud ajouté : " + snapshot.getKey());
+                Log.d("DEBUG_REALTIME", "Nouveau message cloud détecté");
                 ChatMessage msg = snapshot.getValue(ChatMessage.class);
                 if (msg != null) {
-                    messageList.add(msg);
-                    adapter.notifyDataSetChanged();
-                    listMessages.setSelection(adapter.getCount() - 1);
-                    Log.d("DEBUG_VIYU", "Message ajouté à la liste UI : " + msg.message);
-                } else {
-                    Log.e("DEBUG_VIYU", "Impossible de convertir le snapshot en ChatMessage");
+                    // Vérifie si le message n'est pas déjà présent en double
+                    boolean exists = false;
+                    for(ChatMessage existing : messageList) {
+                        if(existing.timestamp == msg.timestamp && existing.sender.equals(msg.sender)) {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (!exists) {
+                        messageList.add(msg);
+                        adapter.notifyDataSetChanged();
+                        listMessages.invalidateViews(); // Force le rafraîchissement de la ListView
+                        listMessages.setSelection(adapter.getCount() - 1);
+                    }
                 }
             }
             @Override public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
             @Override public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
             @Override public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override 
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("DEBUG_VIYU", "Erreur écouteur Firebase : " + error.getMessage());
+            @Override public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("DEBUG_REALTIME", "Erreur écouteur : " + error.getMessage());
             }
         });
     }
@@ -146,11 +147,12 @@ public class ChatActivity extends AppCompatActivity {
                 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
                 txtTime.setText(sdf.format(new Date(msg.timestamp)));
 
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bubbleLayout.getLayoutParams();
-                if (params == null) {
-                    params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                }
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT, 
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                );
 
+                // Différenciation visuelle Expéditeur vs Destinataire
                 if (msg.sender != null && msg.sender.equals(currentUserId)) {
                     params.gravity = Gravity.END;
                     bubbleLayout.setBackgroundResource(R.drawable.bubble_out);
