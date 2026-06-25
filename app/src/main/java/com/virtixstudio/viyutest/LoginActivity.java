@@ -10,22 +10,22 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class RegisterActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText edtEmail, edtPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        edtEmail = findViewById(R.id.edt_reg_email);
-        edtPassword = findViewById(R.id.edt_reg_password);
-        Button btnRegister = findViewById(R.id.btn_register);
-        TextView txtGoLogin = findViewById(R.id.txt_go_login);
+        edtEmail = findViewById(R.id.edt_email);
+        edtPassword = findViewById(R.id.edt_password);
+        Button btnLogin = findViewById(R.id.btn_login);
+        TextView txtGoRegister = findViewById(R.id.txt_go_register);
 
-        btnRegister.setOnClickListener(v -> {
+        btnLogin.setOnClickListener(v -> {
             String email = edtEmail.getText().toString().trim();
             String password = edtPassword.getText().toString().trim();
 
@@ -34,17 +34,19 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            mAuth.createUserWithEmailAndPassword(email, password)
+            mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
-                            startActivity(new Intent(RegisterActivity.this, ChatActivity.class));
+                            startActivity(new Intent(LoginActivity.this, ChatActivity.class));
                             finish();
                         } else {
-                            Toast.makeText(this, "Erreur d'inscription", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Erreur de connexion", Toast.LENGTH_SHORT).show();
                         }
                     });
         });
 
-        txtGoLogin.setOnClickListener(v -> finish());
+        txtGoRegister.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+        });
     }
 }

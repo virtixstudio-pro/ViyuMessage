@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Inscription"
+                android:text="Connexion"
                 android:textSize="26sp"
                 android:textStyle="bold"
                 android:textColor="#2E4F39"
@@ -31,7 +31,7 @@
                 android:layout_marginBottom="24dp"/>
 
             <EditText
-                android:id="@+id/edt_reg_email"
+                android:id="@+id/edt_email"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:background="@drawable/rounded_input"
@@ -43,7 +43,7 @@
                 android:layout_marginBottom="16dp"/>
 
             <EditText
-                android:id="@+id/edt_reg_password"
+                android:id="@+id/edt_password"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:background="@drawable/rounded_input"
@@ -55,21 +55,21 @@
                 android:layout_marginBottom="24dp"/>
 
             <Button
-                android:id="@+id/btn_register"
+                android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:background="@drawable/rounded_button"
-                android:text="S'inscrire"
+                android:text="Se connecter"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp"/>
 
             <TextView
-                android:id="@+id/txt_go_login"
+                android:id="@+id/txt_go_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Déjà un compte ? Se connecter"
+                android:text="Pas de compte ? S'inscrire"
                 android:textColor="#4A7C59"
                 android:textSize="14sp"
                 android:layout_gravity="center_horizontal"
