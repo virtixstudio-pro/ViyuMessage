@@ -61,10 +61,13 @@ public class ChatActivity extends AppCompatActivity {
         adapter = new MessageAdapter();
         listMessages.setAdapter(adapter);
 
-        dbRef = FirebaseDatabase.getInstance().getReference().child("TestChat");
+        // Assure-toi que l'URL dans Firebase Console correspond bien à celle configurée dans ton google-services.json
+        dbRef = FirebaseDatabase.getInstance("https://viyu-message-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("TestChat");
 
         btnSend.setOnClickListener(v -> {
             String text = edtMessage.getText().toString().trim();
+            Log.d("DEBUG_VIYU", "Bouton envoyer cliqué, texte : " + text);
+            
             if (!TextUtils.isEmpty(text)) {
                 String msgId = dbRef.push().getKey();
                 Map<String, Object> msgMap = new HashMap<>();
@@ -76,10 +79,11 @@ public class ChatActivity extends AppCompatActivity {
                     dbRef.child(msgId).setValue(msgMap)
                         .addOnSuccessListener(aVoid -> {
                             edtMessage.setText("");
-                            Toast.makeText(ChatActivity.this, "Message envoyé", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ChatActivity.this, "Message envoyé au cloud", Toast.LENGTH_SHORT).show();
+                            Log.d("DEBUG_VIYU", "Message enregistré avec succès dans Firebase.");
                         })
                         .addOnFailureListener(e -> {
-                            Log.e("FIREBASE_WRITE_ERROR", "Erreur", e);
+                            Log.e("DEBUG_VIYU", "Erreur d'écriture Firebase", e);
                             Toast.makeText(ChatActivity.this, "Erreur : " + e.getMessage(), Toast.LENGTH_LONG).show();
                         });
                 }
@@ -91,17 +95,24 @@ public class ChatActivity extends AppCompatActivity {
         dbRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Log.d("DEBUG_VIYU", "Événement temps réel - Nœud ajouté : " + snapshot.getKey());
                 ChatMessage msg = snapshot.getValue(ChatMessage.class);
                 if (msg != null) {
                     messageList.add(msg);
                     adapter.notifyDataSetChanged();
                     listMessages.setSelection(adapter.getCount() - 1);
+                    Log.d("DEBUG_VIYU", "Message ajouté à la liste UI : " + msg.message);
+                } else {
+                    Log.e("DEBUG_VIYU", "Impossible de convertir le snapshot en ChatMessage");
                 }
             }
             @Override public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
             @Override public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
             @Override public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+            @Override 
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("DEBUG_VIYU", "Erreur écouteur Firebase : " + error.getMessage());
+            }
         });
     }
 
