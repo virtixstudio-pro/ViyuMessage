@@ -15,12 +15,20 @@
         android:layout_marginBottom="32dp"/>
 
     <EditText
-        android:id="@+id/edt_phone"
+        android:id="@+id/edt_email_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Adresse Email"
         android:inputType="textEmailAddress"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="12dp"/>
+
+    <EditText
+        android:id="@+id/edt_password_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mot de passe"
+        android:inputType="textPassword"
+        android:layout_marginBottom="24dp"/>
 
     <Button
         android:id="@+id/btn_login"
@@ -34,6 +42,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pas de compte ? S'inscrire"
-        android:textColor="#FF0000FF"
+        android:textColor="#0000FF"
         android:padding="8dp"/>
 </LinearLayout>

@@ -11,29 +11,44 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AuthActivity extends AppCompatActivity {
-    private EditText edtPhone;
+    private EditText edtEmail, edtPassword;
     private Button btnLogin;
     private TextView btnGotoRegister;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        edtPhone = findViewById(R.id.edt_phone);
+        mAuth = FirebaseAuth.getInstance();
+
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(AuthActivity.this, ChatActivity.class));
+            finish();
+        }
+
+        edtEmail = findViewById(R.id.edt_email_login);
+        edtPassword = findViewById(R.id.edt_password_login);
         btnLogin = findViewById(R.id.btn_login);
         btnGotoRegister = findViewById(R.id.btn_goto_register);
 
         btnLogin.setOnClickListener(v -> {
-            String phone = edtPhone.getText().toString().trim();
-            if (!TextUtils.isEmpty(phone)) {
-                // On passe directement à l'écran de chat pour tester la liaison
-                Intent intent = new Intent(AuthActivity.this, ChatActivity.class);
-                intent.putExtra("user_phone", phone);
-                startActivity(intent);
-                finish();
+            String email = edtEmail.getText().toString().trim();
+            String password = edtPassword.getText().toString().trim();
+
+            if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+                mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            startActivity(new Intent(AuthActivity.this, ChatActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(AuthActivity.this, "Erreur : " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
             } else {
-                Toast.makeText(this, "Entrez un numéro", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Remplissez tous les champs", Toast.LENGTH_SHORT).show();
             }
         });
 
