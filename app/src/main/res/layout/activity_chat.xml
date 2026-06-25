@@ -1,60 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0A0A16">
-
-    <RelativeLayout
-        android:id="@+id/layout_bar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#121225"
-        android:padding="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Canal de Test Réel"
-            android:textColor="#00F5FF"
-            android:textSize="18sp"
-            android:layout_centerVertical="true" />
-    </RelativeLayout>
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/layout_send"
+        android:id="@+id/layout_input"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp"
-        android:background="#121225">
+        android:layout_alignParentBottom="true"
+        android:padding="8dp">
 
         <EditText
             android:id="@+id/edt_message_text"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/smooth_round_background"
             android:hint="Écrire un message..."
-            android:textColorHint="#66FFFFFF"
-            android:textColor="#FFFFFF"
-            android:paddingStart="15dp" />
+            android:inputType="textLongMessage"/>
 
         <Button
             android:id="@+id/btn_send_message"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/btn_round_violet"
-            android:text=">"
-            android:textColor="#FFFFFF" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Envoyer"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_messages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/layout_send"
-        android:layout_below="@id/layout_bar"
-        android:padding="10dp" />
-
+        android:layout_above="@id/layout_input"/>
 </RelativeLayout>
