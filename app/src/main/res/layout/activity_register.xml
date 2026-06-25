@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0A16"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/txt_reg_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Inscription"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
+    <EditText
+        android:id="@+id/edt_reg_name"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_below="@id/txt_reg_title"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/smooth_round_background"
+        android:hint="Prénom et Nom"
+        android:textColorHint="#66FFFFFF"
+        android:textColor="#FFFFFF"
+        android:paddingStart="20dp" />
+
+    <EditText
+        android:id="@+id/edt_reg_phone"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_below="@id/edt_reg_name"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/smooth_round_background"
+        android:hint="Numéro de téléphone"
+        android:textColorHint="#66FFFFFF"
+        android:textColor="#FFFFFF"
+        android:paddingStart="20dp"
+        android:inputType="phone" />
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_below="@id/edt_reg_phone"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/btn_round_violet"
+        android:text="Créer mon compte"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false" />
+</RelativeLayout>

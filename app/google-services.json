@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1071293888182",
+    "project_id": "viyu-message",
+    "storage_bucket": "viyu-message.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1071293888182:android:99fd9c18f2958748f59817",
+        "android_client_info": {
+          "package_name": "com.virtixstudio.viyumessage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjluaPLTuBYIME0_dc8pER23VgnnI6Yp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1071293888182:android:0460293cf1be260ef59817",
+        "android_client_info": {
+          "package_name": "com.viyu.message"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjluaPLTuBYIME0_dc8pER23VgnnI6Yp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
