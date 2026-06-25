@@ -19,4 +19,10 @@ jobs:
         cache: gradle
 
     - name: Build with Gradle
-      run: gradle assembleDebug
+      run: ./gradlew assembleDebug
+
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ViyuMessage-Premium-v1.0.0.2
+        path: app/build/outputs/apk/debug/app-debug.apk
