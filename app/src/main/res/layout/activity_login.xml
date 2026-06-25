@@ -2,80 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8EFE9"
-    android:padding="24dp">
+    android:background="#FFFFFF">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:cardCornerRadius="28dp"
-        app:cardElevation="6dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:backgroundTint="#F4F7F6">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Connexion"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:textColor="#2E4F39"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="24dp"/>
-
-            <EditText
-                android:id="@+id/edt_email"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:background="@drawable/rounded_input"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:paddingHorizontal="18dp"
-                android:textColor="#1C2826"
-                android:textColorHint="#8B9B95"
-                android:layout_marginBottom="16dp"/>
-
-            <EditText
-                android:id="@+id/edt_password"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:background="@drawable/rounded_input"
-                android:hint="Mot de passe"
-                android:inputType="textPassword"
-                android:paddingHorizontal="18dp"
-                android:textColor="#1C2826"
-                android:textColorHint="#8B9B95"
-                android:layout_marginBottom="24dp"/>
-
-            <Button
-                android:id="@+id/btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:background="@drawable/rounded_button"
-                android:text="Se connecter"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="12dp"/>
-
-            <TextView
-                android:id="@+id/txt_go_register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pas de compte ? S'inscrire"
-                android:textColor="#4A7C59"
-                android:textSize="14sp"
-                android:layout_gravity="center_horizontal"
-                android:padding="8dp"/>
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        android:text="Ecran de Connexion"
+        android:textColor="#000000"
+        android:textSize="20sp" />
 
 </RelativeLayout>
