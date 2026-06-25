@@ -13,7 +13,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Button btnReg = findViewById(R.id.btn_register);
         btnReg.setOnClickListener(v -> {
-            Intent intent = new Intent(RegisterActivity.class, ChatActivity.class);
+            Intent intent = new Intent(RegisterActivity.this, ChatActivity.class);
             intent.putExtra("user_phone", "Nouveau_Compte");
             startActivity(intent);
             finish();
