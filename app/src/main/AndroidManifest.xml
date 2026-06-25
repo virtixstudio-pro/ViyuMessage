@@ -11,7 +11,7 @@
         android:allowBackup="true" 
         android:label="Viyu Message" 
         android:supportsRtl="true" 
-        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         
         <activity android:name=".SplashActivity" android:exported="true">
             <intent-filter>
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".LoginActivity" android:exported="false" />
+        <activity android:name=".LoginActivity" android:exported="true" />
         <activity android:name=".RegisterActivity" android:exported="false" />
         <activity android:name=".ProfileCustomizeActivity" android:exported="false" />
         <activity android:name=".ContactListActivity" android:exported="false" />
