@@ -1,0 +1,51 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0'
+        classpath 'com.google.gms:google-services:4.4.0'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+android {
+    namespace 'com.viyu.v2'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.viyu.v2"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.1"
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    // AndroidX & UI
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.10.0'
+    
+    // Firebase BOM (gère automatiquement les versions compatibles)
+    implementation platform('com.google.firebase:firebase-bom:32.7.0')
+    
+    // Auth & Realtime Database
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-database'
+}
