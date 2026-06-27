@@ -28,9 +28,6 @@ jobs:
         sudo ln -sf /opt/gradle/bin/gradle /usr/bin/gradle
         gradle -v
 
-    - name: Diagnose Dependency Tree
-      run: gradle app:dependencies --configuration debugRuntimeClasspath || true
-
     - name: Build Debug APK directly
       run: gradle assembleDebug --stacktrace
 
