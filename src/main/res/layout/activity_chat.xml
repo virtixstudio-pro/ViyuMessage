@@ -1,44 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#121212">
+    android:padding="16dp">
 
     <ListView
-        android:id="@+id/messagesListView"
+        android:id="@+id/chatListView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layoutBottom"
         android:divider="@android:color/transparent"
-        android:transcriptMode="alwaysScroll"
-        android:stackFromBottom="true" />
+        android:transcriptMode="alwaysScroll" />
 
     <LinearLayout
+        android:id="@+id/layoutBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#1E1E1E"
-        android:padding="8dp"
-        android:layout_marginTop="8dp">
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/messageInput"
+            android:id="@+id/inputMessage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Saisir un message..."
-            android:textColor="#FFFFFF"
-            android:textColorHint="#888888"
-            android:backgroundTint="#00E676" />
+            android:hint="Écrivez un message..." />
 
         <Button
-            android:id="@+id/sendButton"
+            android:id="@+id/btnSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Envoyer"
-            android:backgroundTint="#00E676"
-            android:textColor="#121212" />
+            android:text="Envoyer" />
     </LinearLayout>
-</LinearLayout>
+
+</RelativeLayout>
