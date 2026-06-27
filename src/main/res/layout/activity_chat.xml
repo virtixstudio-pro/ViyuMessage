@@ -3,30 +3,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#121212">
 
     <ListView
-        android:id="@+id/messagesList"
+        android:id="@+id/messagesListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:divider="@android:color/transparent"
+        android:transcriptMode="alwaysScroll"
+        android:stackFromBottom="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#1E1E1E"
+        android:padding="8dp"
+        android:layout_marginTop="8dp">
 
         <EditText
             android:id="@+id/messageInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Message..." />
+            android:hint="Saisir un message..."
+            android:textColor="#FFFFFF"
+            android:textColorHint="#888888"
+            android:backgroundTint="#00E676" />
 
         <Button
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Envoyer" />
+            android:text="Envoyer"
+            android:backgroundTint="#00E676"
+            android:textColor="#121212" />
     </LinearLayout>
 </LinearLayout>
