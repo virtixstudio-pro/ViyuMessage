@@ -31,8 +31,17 @@ jobs:
     - name: Build Debug APK directly
       run: gradle assembleDebug --stacktrace
 
-    - name: Upload APK
+    - name: Locate and Upload APK
+      run: |
+        find . -name "*.apk"
+        APK_PATH=$(find . -name "*-debug.apk" | head -n 1)
+        if [ -z "$APK_PATH" ]; then
+          APK_PATH=$(find . -name "*.apk" | head -n 1)
+        fi
+        echo "APK_FOUND=$APK_PATH" >> $GITHUB_ENV
+        
+    - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: ${{ env.APK_FOUND }}
