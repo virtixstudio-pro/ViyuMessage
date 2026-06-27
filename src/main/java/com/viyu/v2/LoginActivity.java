@@ -8,8 +8,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Redirection directe vers ChatActivity pour tester le module de message
-        startActivity(new Intent(this, ChatActivity.java.equals("") ? LoginActivity.class : ChatActivity.class));
+        startActivity(new Intent(this, ChatActivity.class));
         finish();
     }
 }

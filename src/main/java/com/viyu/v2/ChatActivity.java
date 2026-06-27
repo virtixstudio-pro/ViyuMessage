@@ -93,7 +93,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onChildMoved(DataSnapshot snapshot, String previousChildKey) {}
             @Override
-            public void onChildCancelled(DatabaseError error) {
+            public void onCancelled(DatabaseError error) {
                 Log.e("ViyuDebug", "Erreur lecture Firebase: " + error.getMessage());
             }
         });
