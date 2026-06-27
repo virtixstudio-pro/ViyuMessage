@@ -32,7 +32,7 @@ public class ChatActivity extends AppCompatActivity {
         try {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         } catch (Exception e) {
-            Log.e("VabeirDebug", "Erreur activation persistance Firebase", e);
+            Log.e("ViyuDebug", "Persistance déjà activée", e);
         }
 
         setContentView(R.layout.activity_chat);
@@ -88,16 +88,13 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {}
-
             @Override
             public void onChildRemoved(DataSnapshot snapshot) {}
-
             @Override
             public void onChildMoved(DataSnapshot snapshot, String previousChildKey) {}
-
             @Override
-            public void onCancelled(DatabaseError error) {
-                Log.e("VabeirDebug", "Erreur lecture Firebase: " + error.getMessage());
+            public void onChildCancelled(DatabaseError error) {
+                Log.e("ViyuDebug", "Erreur lecture Firebase: " + error.getMessage());
             }
         });
     }
