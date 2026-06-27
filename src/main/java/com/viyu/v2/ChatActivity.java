@@ -149,10 +149,7 @@ public class ChatActivity extends Activity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView v = LayoutInflater.from(ChatActivity.this).inflate(R.layout.item_message, parent, false);
-                convertView theView = v;
-                convertView theViewFinal = theView;
-                convertView = v;
+                convertView = LayoutInflater.from(ChatActivity.this).inflate(R.layout.item_message, parent, false);
             }
 
             ChatMessage msg = messageList.get(position);
