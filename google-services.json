@@ -1,7 +1,6 @@
 {
   "project_info": {
     "project_number": "1071293888182",
-    "firebase_url": "https://viyu-message-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "viyu-message",
     "storage_bucket": "viyu-message.firebasestorage.app"
   },
@@ -10,15 +9,10 @@
       "client_info": {
         "mobilesdk_app_id": "1:1071293888182:android:99fd9c18f2958748f59817",
         "android_client_info": {
-          "package_name": "com.virtixstudio.viyumessage"
+          "package_name": "com.viyu.v2"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1071293888182-bhjgb49ac32699hc6ufohahfckd9kj73.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyDjluaPLTuBYIME0_dc8pER23VgnnI6Yp8"
@@ -26,12 +20,7 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1071293888182-bhjgb49ac32699hc6ufohahfckd9kj73.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     },
@@ -42,20 +31,7 @@
           "package_name": "com.viyu.v2"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1071293888182-58chroe0956de8uie1o2m57nq12qhhr9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.viyu.v2",
-            "certificate_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
-          }
-        },
-        {
-          "client_id": "1071293888182-bhjgb49ac32699hc6ufohahfckd9kj73.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyDjluaPLTuBYIME0_dc8pER23VgnnI6Yp8"
@@ -63,12 +39,7 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1071293888182-bhjgb49ac32699hc6ufohahfckd9kj73.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

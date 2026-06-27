@@ -41,7 +41,43 @@ public class ChatActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+
+        LinearLayout mainLayout = new LinearLayout(this);
+        mainLayout.setOrientation(LinearLayout.VERTICAL);
+        mainLayout.setPadding(30, 30, 30, 30);
+        mainLayout.setBackgroundColor(Color.parseColor("#121212"));
+
+        messagesListView = new ListView(this);
+        messagesListView.setDivider(null);
+        messagesListView.setStackFromBottom(true);
+        LinearLayout.LayoutParams listParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f);
+        mainLayout.addView(messagesListView, listParams);
+
+        LinearLayout inputLayout = new LinearLayout(this);
+        inputLayout.setOrientation(LinearLayout.HORIZONTAL);
+        inputLayout.setBackgroundColor(Color.parseColor("#1E1E1E"));
+        inputLayout.setPadding(15, 15, 15, 15);
+
+        EditText messageInput = new EditText(this);
+        messageInput.setHint("Saisir un message...");
+        messageInput.setTextColor(Color.WHITE);
+        messageInput.setHintTextColor(Color.parseColor("#888888"));
+        LinearLayout.LayoutParams inputParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+        inputLayout.addView(messageInput, inputParams);
+
+        Button sendButton = new Button(this);
+        sendButton.setText("Envoyer");
+        sendButton.setBackgroundColor(Color.parseColor("#00E676"));
+        sendButton.setTextColor(Color.parseColor("#121212"));
+        inputLayout.addView(sendButton);
+
+        LinearLayout.LayoutParams inputLayoutParam = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        inputLayoutParam.topMargin = 15;
+        mainLayout.addView(inputLayout, inputLayoutParam);
+
+        setContentView(mainLayout);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -56,23 +92,19 @@ public class ChatActivity extends Activity {
 
         mDatabase = FirebaseDatabase.getInstance("https://viyu-message-default-rtdb.europe-west1.firebasedatabase.app").getReference();
 
-        messagesListView = findViewById(R.id.messagesListView);
         messageList = new ArrayList<>();
         adapter = new MessagesAdapter();
         messagesListView.setAdapter(adapter);
 
-        EditText messageInput = findViewById(R.id.messageInput);
-        Button sendButton = findViewById(R.id.sendButton);
-
         sendButton.setOnClickListener(v -> {
             String messageText = messageInput.getText().toString().trim();
             if (!messageText.isEmpty()) {
-                String messageId = mDatabase.child("messages").push().getKey();
+                String messageId = mDatabase.child("TestChat").push().getKey();
                 String timestamp = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
                 ChatMessage message = new ChatMessage(currentUserId, messageText, timestamp);
 
                 if (messageId != null) {
-                    mDatabase.child("messages").child(messageId).setValue(message)
+                    mDatabase.child("TestChat").child(messageId).setValue(message)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 messageInput.setText("");
@@ -84,7 +116,7 @@ public class ChatActivity extends Activity {
             }
         });
 
-        mDatabase.child("messages").addValueEventListener(new ValueEventListener() {
+        mDatabase.child("TestChat").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 messageList.clear();
@@ -148,36 +180,80 @@ public class ChatActivity extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            LinearLayout messageWrapper;
+            LinearLayout messageContainer;
+            TextView textMessage;
+            TextView textTime;
+
             if (convertView == null) {
-                convertView = LayoutInflater.from(ChatActivity.this).inflate(R.layout.item_message, parent, false);
+                messageWrapper = new LinearLayout(ChatActivity.this);
+                messageWrapper.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, ListView.LayoutParams.WRAP_CONTENT));
+                messageWrapper.setPadding(15, 15, 15, 15);
+
+                messageContainer = new LinearLayout(ChatActivity.this);
+                messageContainer.setOrientation(LinearLayout.VERTICAL);
+                messageContainer.setPadding(25, 20, 25, 20);
+                
+                LinearLayout.LayoutParams containerParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                messageContainer.setLayoutParams(containerParams);
+
+                textMessage = new TextView(ChatActivity.this);
+                textMessage.setTextSize(16);
+                messageContainer.addView(textMessage);
+
+                textTime = new TextView(ChatActivity.this);
+                textTime.setTextSize(10);
+                textTime.setGravity(Gravity.END);
+                
+                LinearLayout.LayoutParams timeParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                timeParams.topMargin = 8;
+                timeParams.gravity = Gravity.END;
+                messageContainer.addView(textTime, timeParams);
+
+                messageWrapper.addView(messageContainer);
+                convertView = messageWrapper;
+                
+                ViewHolder holder = new ViewHolder(messageContainer, textMessage, textTime);
+                LinearLayout vTag = messageWrapper;
+                vTag.setTag(holder);
             }
 
+            ViewHolder holder = (ViewHolder) convertView.getTag();
             ChatMessage msg = messageList.get(position);
 
-            LinearLayout messageContainer = convertView.findViewById(R.id.messageContainer);
-            TextView textMessage = convertView.findViewById(R.id.textMessage);
-            TextView textTime = convertView.findViewById(R.id.textTime);
+            holder.textMessage.setText(msg.getText());
+            holder.textTime.setText(msg.getTime());
 
-            textMessage.setText(msg.getText());
-            textTime.setText(msg.getTime());
-
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) messageContainer.getLayoutParams();
+            LinearLayout.LayoutParams wrapperParams = (LinearLayout.LayoutParams) holder.messageContainer.getLayoutParams();
 
             if (msg.getSenderId().equals(currentUserId)) {
-                messageContainer.setBackgroundColor(Color.parseColor("#00E676"));
-                textMessage.setTextColor(Color.parseColor("#121212"));
-                textTime.setTextColor(Color.parseColor("#004D40"));
-                params.gravity = Gravity.END;
+                holder.messageContainer.setBackgroundColor(Color.parseColor("#00E676"));
+                holder.textMessage.setTextColor(Color.parseColor("#121212"));
+                holder.textTime.setTextColor(Color.parseColor("#004D40"));
+                wrapperParams.gravity = Gravity.END;
             } else {
-                messageContainer.setBackgroundColor(Color.parseColor("#333333"));
-                textMessage.setTextColor(Color.parseColor("#FFFFFF"));
-                textTime.setTextColor(Color.parseColor("#BBBBBB"));
-                params.gravity = Gravity.START;
+                holder.messageContainer.setBackgroundColor(Color.parseColor("#333333"));
+                holder.textMessage.setTextColor(Color.WHITE);
+                holder.textTime.setTextColor(Color.parseColor("#BBBBBB"));
+                wrapperParams.gravity = Gravity.START;
             }
             
-            messageContainer.setLayoutParams(params);
-
+            holder.messageContainer.setLayoutParams(wrapperParams);
             return convertView;
+        }
+
+        private class ViewHolder {
+            LinearLayout messageContainer;
+            TextView textMessage;
+            TextView textTime;
+
+            public ViewHolder(LinearLayout container, TextView msg, TextView time) {
+                this.messageContainer = container;
+                this.textMessage = msg;
+                this.textTime = time;
+            }
         }
     }
 }
