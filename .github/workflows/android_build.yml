@@ -20,12 +20,12 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Download and Install Gradle 8.4
+    - name: Download and Force Install Gradle 8.4
       run: |
-        wget https://services.gradle.org/distributions/gradle-8.4-bin.zip
+        wget -q https://services.gradle.org/distributions/gradle-8.4-bin.zip
         unzip -q gradle-8.4-bin.zip
         sudo mv gradle-8.4 /opt/gradle
-        sudo ln -s /opt/gradle/bin/gradle /usr/bin/gradle
+        sudo ln -sf /opt/gradle/bin/gradle /usr/bin/gradle
         gradle -v
 
     - name: Build Debug APK directly
