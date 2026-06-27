@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
@@ -19,17 +20,23 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(16, 16, 16, 16);
+
+        inputMessage = new EditText(this);
+        inputMessage.setHint("Saisir un message");
+        layout.addView(inputMessage);
+
+        btnSend = new Button(this);
+        btnSend.setText("Envoyer");
+        layout.addView(btnSend);
+
+        setContentView(layout);
 
         Log.d("DebugViyu", "ChatActivity onCreate");
         mDatabase = FirebaseDatabase.getInstance("https://viyu-message-default-rtdb.europe-west1.firebasedatabase.app").getReference();
-
-        inputMessage = findViewById(R.id.inputMessage);
-        btnSend = findViewById(R.id.btnSend);
-
-        if (btnSend == null) {
-            Log.e("DebugViyu", "ERREUR: btnSend est null ! Le XML ne correspond pas.");
-        }
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
