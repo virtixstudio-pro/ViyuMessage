@@ -1,23 +1,23 @@
-// Configuration du projet Viyu message
 buildscript {
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.4'
         classpath 'com.google.gms:google-services:4.4.2'
     }
 }
 
-plugins {
-    id 'com.android.application'
-    id 'com.google.gms.google-services'
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
 }
 
-repositories {
-    google()
-    mavenCentral()
-}
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     namespace 'com.viyu.v2'
