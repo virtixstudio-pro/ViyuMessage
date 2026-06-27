@@ -39,7 +39,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1071293888182:android:0460293cf1be260ef59817",
         "android_client_info": {
-          "package_name": "com.viyu.message"
+          "package_name": "com.viyu.v2"
         }
       },
       "oauth_client": [
@@ -47,7 +47,7 @@
           "client_id": "1071293888182-58chroe0956de8uie1o2m57nq12qhhr9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.viyu.message",
+            "package_name": "com.viyu.v2",
             "certificate_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
           }
         },
